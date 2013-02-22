@@ -1,1 +1,7 @@
 This is a capstone project at Washburn University.
+
+SSH Tunnel Notes
+ssh -4 -p2222 -f username@198.252.11.72 -L localhost:4444:198.252.11.72:35000 sleep 30
+
+Crontab Notes
+*/3 * * * * initialScriptClient.py --Runs every three minutes
