@@ -11,7 +11,7 @@ my_address = socket.gethostbyname(socket.gethostname())
 
 #Bind the socket to the port
 server_Add = (my_address, 8193)
-print >>sys.stderr, 'starting up on %s port %s' % server_Add
+print >>sys.stderr, 'Starting Up On: %s => Port: %s' % server_Add
 soc.bind(server_Add)
 
 #Now listen for incoming connections
@@ -22,24 +22,24 @@ dataNum=1
   	
 def server_conn(connNum, dataNum):	
 	try:
-		print >>sys.stderr, 'connection from', client_address
+		print >>sys.stderr, 'Connection From: ', client_address
 		#function junction
 		while True:
 			data = connection.recv(64)
-			print >>sys.stderr, 'received "%s"' % data
+			print >>sys.stderr, 'Received: "%s"' % data
 			if data:
-				print >>sys.stderr,'sending data back to the client'
+				print >>sys.stderr,'Sending Data Back To The Client'
 				for j in range(4):
-					connection.sendall('you are connection #' + str(connNum) + ' data # ' + str(dataNum))
+					connection.sendall('You Are Connection #' + str(connNum) + ' Data # ' + str(dataNum))
 					dataNum+=1
-					print >>sys.stderr,'sending data# ',dataNum-1,' to connection # ', connNum
+					print >>sys.stderr,'Sending Data# ',dataNum-1,' To Connection # ', connNum
 					time.sleep(2)			
 				
 				connection.sendall('dasEnde')
 				connNum+=1
 				dataNum=1
 			else:
-				print >>sys.stderr, 'no more data from', client_address
+				print >>sys.stderr, 'Do More Data From', client_address
 				break
 	finally:
 		connection.close()
@@ -50,7 +50,7 @@ if __name__ == "__main__":
 
 	while True:
 	#Wait for a connection
-		print >>sys.stderr, 'waiting for a connection'
+		print >>sys.stderr, 'Waiting For A Connection'
 		connection, client_address = soc.accept()
 
 		while connection:
@@ -58,7 +58,3 @@ if __name__ == "__main__":
 			p.start()
 			p.join()
 			thread_list.append(p)
-			
-	
-
-
