@@ -1,4 +1,4 @@
-#!/usr/lib/python
+#!/usr/bin/python
 import os, sys
 
 pingAddress='172.18.69.236'
