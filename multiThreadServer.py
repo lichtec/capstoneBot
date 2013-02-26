@@ -15,7 +15,8 @@ def handler(clientsock,addr):
 	clientsock.close()
 
 if __name__=='__main__':
-	HOST = 'localhost'
+	#HOST = 'localhost'
+	HOST = '198.252.11.72'
 	PORT = 35000
 	BUFSIZ = 1024
 	ADDR = (HOST, PORT)
@@ -31,5 +32,5 @@ if __name__=='__main__':
 		f.write(str(addr) + '\n')
 		f.close()
 
-		print 'Connection From: ', addr
+		print '\nConnection From: ', addr
 		thread.start_new_thread(handler, (clientsock, addr))
