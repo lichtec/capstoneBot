@@ -12,6 +12,7 @@ def handler(clientsock,addr):
         	msg = data
 		clientsock.send(msg)
 		print >>sys.stderr, '\nReceived: "%s"' % msg
+		print '\nWaiting For Connections'
 	clientsock.close()
 
 if __name__=='__main__':
@@ -22,11 +23,11 @@ if __name__=='__main__':
 	ADDR = (HOST, PORT)
 	serversock = socket(AF_INET, SOCK_STREAM)
 	print >>sys.stderr, 'Starting Up On: %s => Port: %s' % ADDR
+	print 'Waiting For Connections'
 	serversock.bind(ADDR)
 	serversock.listen(2)
 
 	while 1:
-		print 'Waiting For Connections'
 		clientsock, addr = serversock.accept()
 		f=open('client_address_list','a')
 		f.write(str(addr) + '\n')
