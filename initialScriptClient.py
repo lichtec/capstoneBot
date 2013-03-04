@@ -26,6 +26,7 @@ soc = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
 #Connect the socket to the port where the server is listening
 server_address = ('198.252.11.72', 35000)
 #server_address = ('localhost', 4444)
+#server_address = ('localhost', 35000)
 print >>sys.stderr, 'Connecting To: %s => Port: %s' % server_address
 soc.connect(server_address)
 
@@ -45,11 +46,11 @@ try:
 		amount_received += len(data)
 		print >>sys.stderr, '\nReceived: "%s"' % data
 	thread1 = myThread(1, "Thread-1", 1)
-	thread2 = myThread(2, "Thread-2", 2)
+	#thread2 = myThread(2, "Thread-2", 2)
 
 	# Start new Threads
 	thread1.start()
-	thread2.start()
+	#thread2.start()
 
 	print "Exiting Main Thread"
 	
