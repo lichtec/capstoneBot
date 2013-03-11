@@ -3,10 +3,10 @@ import os, sys
 
 threadCount=10
 
-def Ping(threadCount):
-	pingAddress='127.0.0.1'
+def Ping(pings):
+	pingAddress='192.168.1.1'
 	#pingCmd='ping -c18 %s | grep "potato"' % pingAddress
-	pingCmd='ping -c2 %s > /dev/null 2>&1' % pingAddress
+	pingCmd='ping -c%s %s > /dev/null 2>&1' % (pings, pingAddress)
 	os.system(pingCmd)
 	print('Good Job')
 	exit()
