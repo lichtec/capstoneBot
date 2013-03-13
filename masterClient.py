@@ -2,6 +2,10 @@ import socket
 import sys
 import time
 
+#DATA ENTRY
+ipAddr = '198.252.11.72'
+nmPing = '4'
+
 #Create a TCP/IP socket
 soc = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
 
@@ -22,11 +26,16 @@ try:
 	print >>sys.stderr, 'sending "%s"' % message
 	soc.sendall(message)
 	time.sleep(2)
-	print >>sys.stderr, 'sending new ip address'
-	soc.sendall('198.252.11.72')
+	print >>sys.stderr, 'sending new ip address: %s' %ipAddr
+	soc.sendall(ipAddr)
 	time.sleep(2)
-	print >>sys.stderr, 'sending number of pings'
-	soc.sendall('4')
+	print >>sys.stderr, 'sending number of pings: %s' %nmPing
+	soc.sendall(nmPing)
+	time.sleep(2)
+	confirmIp = soc.recv(150)
+	confirmPings = soc.recv(150)
+	print >>sys.stderr, confirmIp
+	print >>sys.stderr, confirmPings
 
 finally:
 	print >>sys.stderr, 'closing socket'

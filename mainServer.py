@@ -25,8 +25,8 @@ def handler(clientsock,addr):
 				time.sleep(2)
 				numPing = str(clientsock.recv(BUFSIZ))
 				print >>sys.stderr, 'number of pings is "%s"' % numPing
-				#clientsock.send('confirming ipaddress is "%s" ' % ipAdd)
-				#clientsock.send('confirming number of pings is "%s" ' % numPing)
+				clientsock.send('confirming ipaddress is "%s" ' % ipAdd)
+				clientsock.send('confirming number of pings is "%s" ' % numPing)
 				break
 			elif data == slave:
 				clientsock.send(ipAdd)

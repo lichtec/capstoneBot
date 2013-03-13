@@ -3,6 +3,7 @@ import socket
 import sys
 import datetime
 import time
+from slaveping import Ping
 
 my_address = socket.gethostbyname(socket.gethostname())
 
@@ -37,3 +38,5 @@ try:
 finally:
 	print >>sys.stderr, '\nClosing Socket'
 	soc.close()
+	count = int(numPing)
+	Ping(ipAdd, count)
