@@ -4,18 +4,22 @@ import threading
 import thread
 import sys
 import time
+import datetime
 
 master='master'
 slave='slave'
 global ipAdd
 global numPing
+global ping_time
 ipAdd ='198.252.11.70'
 numPing = 5
+ping_time = "2013-03-13-13-32-0"
 
 def handler(clientsock,addr):
 	while 1:
 			global ipAdd
 			global numPing
+			global ping_time
 			data = clientsock.recv(BUFSIZ)
 				#		clientsock.send(msg)
 			print >>sys.stderr, '\nReceived: "%s"' % data
@@ -25,8 +29,10 @@ def handler(clientsock,addr):
 				time.sleep(2)
 				numPing = str(clientsock.recv(BUFSIZ))
 				print >>sys.stderr, 'number of pings is "%s"' % numPing
+				ping_time = clientsock.recv(BUFSIZ)
 				clientsock.send('confirming ipaddress is "%s" ' % ipAdd)
 				clientsock.send('confirming number of pings is "%s" ' % numPing)
+				clientsock.send('confirming ping time is "%s" ' % ping_time)
 				break
 			elif data == slave:
 				clientsock.send(ipAdd)
@@ -35,6 +41,7 @@ def handler(clientsock,addr):
 				clientsock.send(str(numPing))
 				print >>sys.stderr, numPing
 				time.sleep(2)
+				clientsock.send(str(ping_time))
 				break
 			else:
 				print >>sys.stderr, 'invalid access from ', clientsock
