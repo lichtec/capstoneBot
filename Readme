@@ -5,3 +5,6 @@ ssh -4 -p2222 -f username@198.252.11.72 -L localhost:4444:198.252.11.72:35000 sl
 
 Crontab Notes
 */3 * * * * initialScriptClient.py --Runs every three minutes
+
+Punch Notes
+sudo ./punch -s "Source IP" -d "Destination IP" -P1- -f
