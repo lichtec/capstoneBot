@@ -4,15 +4,17 @@ import sys
 import datetime
 import time
 from slaveping import Ping
-#from slavepunch import Punch
+from slavepunch import Punch
 
 my_address = socket.gethostbyname(socket.gethostname())
 
-slave = 'slave'
+ping = 'slaveping'
+punch = 'slavepunch'
 global ipAdd
 global numPing
+global srcAdd
 #ipAdd = '198.252.11.72'
-ipAdd = 'localhost'
+srcAdd = 'localhost'
 numPing = 5
 global ping_time_str
 
@@ -30,27 +32,32 @@ soc.connect(server_address)
 
 try:
 	#send data
-	message = 'Client Hostname: ' + socket.gethostname() + '\n' + 'slave'
-	print >>sys.stderr, '\nSending: "%s"' % message
-	soc.sendall(slave)
-		
-	while True:
+	#message = 'Client Hostname: ' + socket.gethostname()
+	#message = 'slavepunch'
+	message = 'slaveping'
+	print >>sys.stderr, '\nSending: "%s"\n' % message 
+	soc.sendall(message)
+	#print >>sys.stderr, '\nSending: "%s"\n' % message 
+	#soc.sendall(punch)
+	
+	if message == ping:
 		ipAdd = soc.recv(1024)
 		numPing = soc.recv(1024)
 		ping_time_str = soc.recv(1024)
 		print >>sys.stderr, 'New IP Address: ', ipAdd
 		print >>sys.stderr, 'Number of Pings: ', numPing
 		print >>sys.stderr, 'Time to Spam: ', ping_time_str
-		break
-	
+		count = int(numPing)
+		while True:
+			curr_time = datetime.datetime.now()
+			ping_time_time = datetime.datetime(*map(int,ping_time_str.split('-')))
+			if curr_time > ping_time_time:
+				Ping(ipAdd, count)
+				print >>sys.stderr, 'Complete'
+				break
+	else:
+		ipAdd = soc.recv(1024)	
+		Punch(srcAdd, ipAdd)
 finally:
 	print >>sys.stderr, '\nClosing Socket'
 	soc.close()
-	count = int(numPing)
-	while True:
-		curr_time = datetime.datetime.now()
-		ping_time_time = datetime.datetime(*map(int,ping_time_str.split('-')))
-		if curr_time > ping_time_time:
-			Ping(ipAdd, count)
-			print >>sys.stderr, 'Complete'
-			break

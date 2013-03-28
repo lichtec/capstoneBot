@@ -7,7 +7,7 @@ import time
 #ipAddr = '198.252.11.72'
 ipAddr = 'localhost'
 nmPing = '4'
-ping_time_str = "2013-03-13-13-39-0"
+ping_time_str = "2013-03-27-21-05-0"
 
 #Create a TCP/IP socket
 soc = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
@@ -28,18 +28,18 @@ try:
 	message = 'master'
 	print >>sys.stderr, 'Sending: "%s"' % message
 	soc.sendall(message)
-	time.sleep(2)
+	time.sleep(1)
 	print >>sys.stderr, 'Sending New IP Address: %s' %ipAddr
 	soc.sendall(ipAddr)
-	time.sleep(2)
+	time.sleep(1)
 	print >>sys.stderr, 'Sending Number of Pings: %s' %nmPing
 	soc.sendall(nmPing)
-	time.sleep(2)
+	time.sleep(1)
 	print >>sys.stderr, 'Sending Ping Time: %s' %ping_time_str
 	soc.sendall(ping_time_str)
-	confirmIp = soc.recv(150)
-	confirmPings = soc.recv(150)
-	confirmPingTime = soc.recv(150)
+	confirmIp = soc.recv(1024)
+	confirmPings = soc.recv(1024)
+	confirmPingTime = soc.recv(1024)
 	print >>sys.stderr, confirmIp
 	print >>sys.stderr, confirmPings
 	print >>sys.stderr, confirmPingTime

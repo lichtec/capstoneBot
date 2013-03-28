@@ -8,3 +8,4 @@ Crontab Notes
 
 Punch Notes
 sudo ./punch -s "Source IP" -d "Destination IP" -P1- -f
+sudo ./punch -s localhost -d 198.252.11.72 -P1- -f -p'perl -e 'print "." x 1400
