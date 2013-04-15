@@ -63,8 +63,8 @@ def handler(clientsock,addr):
 	clientsock.close()
 
 if __name__=='__main__':
-	HOST = 'localhost'
-	#HOST = '198.252.11.72'  USE THIS
+	#HOST = 'localhost'
+	HOST = '198.252.11.72'  #USE THIS
 	PORT = 35000
 	BUFSIZ = 1024
 	ADDR = (HOST, PORT)

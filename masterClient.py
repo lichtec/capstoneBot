@@ -4,7 +4,7 @@ import sys
 import time
 
 #DATA ENTRY
-ipAddr = '198.252.11.70'
+ipAddr = '192.168.4.161'
 #ipAddr = 'localhost'
 nmPing = '4'
 ping_time_str = "2013-04-03-15-21-0"
@@ -17,8 +17,8 @@ my_address = socket.gethostbyname(socket.gethostname())
 print>>sys.stderr,'My IP Address: %s' %my_address
 
 #Connect the socket to the port where the server is listening
-#server_address = ('198.252.11.72', 35000)
-server_address = ('localhost', 35000)
+server_address = ('198.252.11.72', 35000)
+#server_address = ('localhost', 35000)
 #server_address = (ipAddr, 35000)
 print >>sys.stderr, 'Connecting to: %s => Port: %s' % server_address
 soc.connect(server_address)
