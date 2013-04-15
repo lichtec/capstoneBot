@@ -29,7 +29,8 @@
  * SUCH DAMAGE.
  *
  */
-#include <Python.h> 
+ 
+#include <Python.h>
 #include "./punch.h"
 
 int
