@@ -1,3 +1,4 @@
+#!/usr/bin/python2
 import httplib
 import threading
 
@@ -10,14 +11,8 @@ import threading
 # 	def run(self):
 # 		test()
 
-host = 'www.python.org'
+host = 'ArchMO16'
 port = 80
-<<<<<<< HEAD
-conn = httplib.HTTPConnection(host, port)
-conn.request("Get", "/index.html")
-r1 = conn.getresponse()
-print r1.status, r1.reason                   
-=======
 		
 x=5
 while(x>0):
