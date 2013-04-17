@@ -40,7 +40,7 @@ try:
 	#send data
 	#message = 'Client Hostname: ' + socket.gethostname()
 	#message = 'slavepunch'
-	message = 'slavetest'
+	#message = 'slavetest'
 	#message = 'slaveping'
 	#message = 'udp'
 	message = 'slavehping'
