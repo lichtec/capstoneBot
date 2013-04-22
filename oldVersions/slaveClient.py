@@ -8,7 +8,6 @@ from slaveping import Ping
 from slavepunch import Punch
 from udpfld import Floodudp
 from slavetest import Test
-import slowDeath
 
 my_address = socket.gethostbyname(socket.gethostname())
 
@@ -19,7 +18,6 @@ test = 'slavetest'
 global ipAdd
 global numPing
 global srcAdd
-global threads
 #ipAdd = '198.252.11.72'
 srcAdd = 'localhost'
 numPing = 5
@@ -82,10 +80,6 @@ try:
 						time.sleep(1)
 					time.sleep(1)
 			break
-	elif message == slowDeath:
-		ipAdd = soc.rec(1024)
-		threads = soc.rec(1024)
-		
 
 finally:
 	print >>sys.stderr, '\nClosing Socket'
