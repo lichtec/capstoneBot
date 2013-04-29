@@ -85,7 +85,7 @@ class Worker (threading.Thread):
 
 			#s.close()
 
-def main(ipadd):
+def main(ipAdd):
 	parser = OptionParser(
 	    version="slowdeath v0.1",
 	    description="Kills webservers by keeping many connections open, avoiding timeouts.",
