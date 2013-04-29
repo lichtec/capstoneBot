@@ -5,6 +5,7 @@ from urlparse import urlparse
 from time import sleep
 import socket
 import threading
+import errno
 
 def openConnections(url, threads, sleepTime) :
 	urlParts = urlparse(url)
@@ -76,7 +77,7 @@ class Worker (threading.Thread):
 					if isinstance(e.args, tuple):
 						if e[0] == errno.EPIPE:
 							flag = False
-							print "error"
+							#print "error"
 						else:
 							pass
 					else:
