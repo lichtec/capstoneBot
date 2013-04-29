@@ -79,10 +79,11 @@ class Worker (threading.Thread):
 							flag = False
 							#print "error"
 						else:
-							pass
+							flag = False
 					else:
-						pass
-			
+						flag = False
+				except urllib.error.URLError, e:
+					flag = False
 
 			#s.close()
 
