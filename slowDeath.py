@@ -85,7 +85,7 @@ class Worker (threading.Thread):
 
 			#s.close()
 
-def main():
+def main(ipadd):
 	parser = OptionParser(
 	    version="slowdeath v0.1",
 	    description="Kills webservers by keeping many connections open, avoiding timeouts.",
@@ -110,8 +110,8 @@ def main():
 
 	#if len(args) < 1: parser.error("This utility requires at least 1 argument")
 
-	url = args[0]
-	#url = 'http://' + ipAdd
+	#url = args[0]
+	url = 'http://' + ipAdd
 	x=1
 	while(x>0):
 		openConnections(url, options.threads, options.sleepTime)
